@@ -51,7 +51,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Deploy Node.js App
+      - name: Deploy Node.js Server
         run: |
-          pm2 delete app || true
-          pm2 start index.js --name app
+          pm2 delete "Server" || true
+          pm2 start "npm start" --name="Server"
