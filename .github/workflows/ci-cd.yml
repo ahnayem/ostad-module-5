@@ -31,4 +31,27 @@ jobs:
           name: test-results
           path: test-results.txt
 
-  
+  deploy:
+    name: Deploy Application
+    needs: test
+    runs-on: [self-hosted, nodejs]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download test results
+        uses: actions/download-artifact@v4
+        with:
+          name: test-results
+
+      - name: Display test results
+        run: cat test-results.txt
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Deploy Node.js App
+        run: |
+          pm2 delete app || true
+          pm2 start index.js --name app
