@@ -34,7 +34,7 @@ jobs:
   deploy:
     name: Deploy Application
     needs: test
-    runs-on: [self-hosted, nodejs]
+    runs-on: self-hosted
 
     steps:
       - name: Checkout code
@@ -51,7 +51,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Deploy Node.js Server
+      - name: Deploy to the server
         run: |
           pm2 delete "Server" || true
           pm2 start "npm start" --name="Server"
